@@ -23,7 +23,12 @@ github repositories project settings/secrets/actions
 `//สร้าง NPM_TOKEN ด้วย New repositories secrets`
 \*\*example URL https://github.com/total-typescript/ts-reset/blob/main/package.json
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 update NPM_TOKEN OK
 =======
 >>>>>>> 282a476 (update commit)
+=======
+
+test
+>>>>>>> eb495b3 (TEST COMMIT)
