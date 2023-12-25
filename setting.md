@@ -22,5 +22,8 @@ Update the scripts in your package.json with the following
 github repositories project settings/secrets/actions
 `//สร้าง NPM_TOKEN ด้วย New repositories secrets`
 \*\*example URL https://github.com/total-typescript/ts-reset/blob/main/package.json
+<<<<<<< HEAD
 
 update NPM_TOKEN OK
+=======
+>>>>>>> 282a476 (update commit)
