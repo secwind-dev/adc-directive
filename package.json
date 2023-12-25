@@ -1,6 +1,6 @@
 {
-  "name": "@secwind/adc",
-  "version": "0.0.2",
+  "name": "adc-directive",
+  "version": "0.1.0",
   "description": "",
   "private": false,
   "main": "./dist/index.js",

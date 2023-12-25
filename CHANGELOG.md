@@ -1,5 +1,11 @@
 # @secwind/adc
 
+## 0.1.0
+
+### Minor Changes
+
+- TEST npm publish
+
 ## 0.0.2
 
 ### Patch Changes
