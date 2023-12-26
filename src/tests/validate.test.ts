@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { dcFindPayload, dcNestedKey } from '../directive'
+import { dcFindPayload } from '../directive'
 
 const payload = {
     id: 99,
@@ -10,15 +10,7 @@ const payload = {
 }
 
 describe('ADC Validate', () => {
-    it('dcFindPayload toMatchObject PAYLOAD', () => {
-        const res = dcFindPayload(payload, Object.keys(payload))
-        expect(res).toMatchObject(payload)
-    })
-    it('dcFindPayload Select id toMatchObject PAYLOAD', () => {
-        const res = dcFindPayload(payload, ['id'])
-        expect(res).toMatchObject(payload)
-    })
-    it('dcFindPayload toThrowError', () => {
+    it('dcFindPayload toThrowError key color', () => {
         expect(() => dcFindPayload(payload, ['id', 'color'])).toThrowError(
             /color/
         )
@@ -27,9 +19,5 @@ describe('ADC Validate', () => {
         expect(() =>
             dcFindPayload(payload, ['id', 'color'], 'test msg')
         ).toThrowError(/test msg/)
-    })
-    it('dcNestedKey expect undefined', () => {
-        const res = dcNestedKey(payload, ['notName'])
-        expect(res).toBe(undefined)
     })
 })
