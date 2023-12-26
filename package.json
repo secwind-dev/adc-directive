@@ -16,8 +16,8 @@
     "test": "vitest run",
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "validate": "tsc",
-    "ci": "npm run validate & npm run test & pnpm run build & changeset publish",
-    "release": "npm run validate & npm run test & pnpm run build "
+    "ci": "npm run validate & npm run test & pnpm run build",
+    "local": "npm run validate & npm run test & npm version patch & pnpm run build & changeset publish"
   },
   "keywords": [],
   "author": "SecWind <secwind.dev@gmail.com>",
