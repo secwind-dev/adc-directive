@@ -1,2 +1,2 @@
-export * from './directive'
-export * from './type'
+export * from '../directive'
+export * from '../type'

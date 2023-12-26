@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { dcCheckItemDuplicate } from '../index/index'
+import { dcCheckItemDuplicate } from '../directive'
 const items = [
     {
         id: 1,
