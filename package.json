@@ -14,17 +14,21 @@
   "scripts": {
     "dev": "vitest",
     "test": "vitest run",
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "validate": "tsc",
+    "build": "tsup src/index --format cjs,esm --dts",
+    "validate": "tsc & npm run test",
     "ci": "npm run validate & npm run test & pnpm run build",
-    "local": "npm run validate & npm run test & npm version patch & pnpm run build & changeset publish"
+    "local": "npm run validate & npm run test"
   },
   "keywords": [],
   "author": "SecWind <secwind.dev@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.5",
+    "i": "^0.3.7",
+    "lodash": "^4.17.21",
+    "npm": "^10.2.5",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
     "vitest": "^1.1.0"
