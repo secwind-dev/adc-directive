@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { CheckValue, NestedKeys } from './type'
+import { NestedKeys } from './type'
 
 export function dcDelay(next: () => void, time: number) {
     return new Promise((resolve) => {
@@ -8,6 +8,104 @@ export function dcDelay(next: () => void, time: number) {
         }, time)
     })
 }
+
+export function dcUid(count: number, _character?: string): string {
+    let result = ''
+    let characters =
+        _character ||
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let charactersLength = characters.length
+    for (let i = 0; i < count; i++) {
+        result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        )
+    }
+    return result
+}
+
+/**
+ * @category  สลับตำแหน่ง array  dcRandomItem(['A','B','C'])
+ * @category ผลลัพธ์ ['B','C','A']
+ * @example
+ *
+ * dcRandomItem(['A','B','C'])
+ */
+export function dcChangePositionItems<T extends Array<any>>(items: T): T {
+    for (
+        let j, x, i = items.length;
+        i;
+        j = parseInt(Math.random() * i + ''),
+            x = items[--i],
+            items[i] = items[j],
+            items[j] = x
+    );
+    return items
+}
+
+/*------------------------------Modal & Element---------------------------------*/
+/**
+ * @category เป็นการ trigger body ให้เกิด overflow hidden
+ * @example
+ *
+ * dcModal(true)
+ */
+export function dcModal(is_active: boolean = false): void {
+    if (typeof window !== 'undefined') {
+        const body: HTMLElement = document.body
+        if (is_active) {
+            body.style.overflow = 'hidden'
+            // body?.classList.add('open-modal')
+        } else {
+            body.style.overflow = 'auto'
+            // body?.classList.remove('open-modal')
+        }
+    }
+}
+
+// export function dcLoader(
+//     is_active: boolean,
+//     title: string = 'รอสักครู่...'
+// ): void {
+//     const loader = new swLoader(title)
+//     if (is_active) {
+//         loader.render()
+//     } else {
+//         loader.stop()
+//     }
+// }
+
+// export function dcOverlay(_text?: string, _time?: number): void {
+//     const text = _text || 'บันทึกสำเร็จ'
+//     const time = _time || 1
+//     const start = () => {
+//         if (typeof window !== 'undefined') {
+//             const elRoot: Element | null = document.querySelector(
+//                 '#use_overlay_by_secwind'
+//             )
+
+//             elRoot?.classList.add('active')
+//             let title = elRoot?.querySelector('.overlay-text') as
+//                 | HTMLSpanElement
+//                 | undefined
+//             if (title) {
+//                 title.innerHTML = text
+//             }
+//             setTimeout(() => {
+//                 stop()
+//             }, time * 1000)
+//         }
+//     }
+//     const stop = () => {
+//         if (typeof window !== 'undefined') {
+//             const elRoot: Element | null = document.querySelector(
+//                 '#use_overlay_by_secwind'
+//             )
+//             elRoot?.classList.remove('active')
+//         }
+//     }
+//     start()
+// }
+/*-------------x----------------Modal & Element-----------------x---------------*/
 
 /*------------------------------Data Transfer---------------------------------*/
 /**
@@ -36,6 +134,24 @@ export function dcHasKey(text: string | number | null): string {
     // let str = String(text || '').replace(/[^a-zA-Z0-9_-]/g, '')
 
     return str.replace(/ /g, '').toLocaleLowerCase()
+}
+
+/**
+ * @category จัด format ตัวเลขให้แสดง comma และ decimal
+ * @example
+ *
+ * dcCurrency(3500.78,2)
+ */
+export function dcCurrency(
+    _number: string | number | null,
+    decimal: 0 | 2 = 0
+): string {
+    let value = Number(_number) || 0
+    return value.toLocaleString('en-US', {
+        style: 'decimal',
+        maximumFractionDigits: 2,
+        minimumFractionDigits: decimal,
+    })
 }
 /*-------------x----------------Data Transfer-----------------x---------------*/
 
@@ -114,6 +230,15 @@ export function dcFindPayload<T extends object, K extends NestedKeys<T>>(
 /*-------------x----------------Validate-----------------x---------------*/
 
 /*------------------------------Run of Loop---------------------------------*/
+/**
+ * @category เสมือน forEach แต่สามารถกำหนด Loop Indexได้
+ * @example
+ *
+ *  index = 5
+ *  dcRunProcess(items, (item, index) => {
+       console.log(item.name)
+    },index)
+ */
 export function dcRunProcess<T>(
     items: T[],
     next: (args: T, i?: number) => void,
@@ -126,4 +251,18 @@ export function dcRunProcess<T>(
         dcRunProcess(items, next, index + 1)
     }
 }
+
+/**
+ * @category random จำนวน ระหว่างจำนวน
+ * @example
+ *
+ * dcRandom(1000,9999)
+ */
+export function dcRandomBetween(_number1: number, _number2: number): number {
+    const min = Math.min(_number1, _number2)
+    const res = Math.abs(_number1 - _number2)
+    const result = Math.round(Math.random() * res + min)
+    return result
+}
+
 /*-------------x----------------Run of Loop-----------------x---------------*/
