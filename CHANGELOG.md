@@ -1,5 +1,11 @@
 # @secwind/adc
 
+## 0.1.7
+
+### Patch Changes
+
+- Update Patch 0.1.7 .npmignore src & test build npm
+
 ## 0.1.5
 
 ### Patch Changes
