@@ -10,16 +10,23 @@
  *  dcRunProcess(items, (item, index) => {
        console.log(item.name)
     },index)
+ *  dcRunProcess(items, (item, index) => {
+       console.log(item.name)
+    },[2,3])
  */
 export function dcRunProcess<T>(
     items: T[],
     next: (args: T, i?: number) => void,
-    index: number = 0
+    _index: number | [number, number] = 0
 ): void {
-    if (index < items.length) {
+    const [index, length] = Array.isArray(_index)
+        ? _index
+        : [_index, items.length]
+    const n = Array.isArray(_index) ? 1 : 0
+    if (index < length + n && index < items.length) {
         const data = items[index]
         next(data, index)
 
-        dcRunProcess(items, next, index + 1)
+        dcRunProcess(items, next, [index + 1, length])
     }
 }
