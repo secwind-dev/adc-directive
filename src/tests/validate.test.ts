@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { dcFindPayload } from '../directive'
+import * as valid from '../fnValidate'
 
 const payload = {
     id: 99,
@@ -10,14 +10,16 @@ const payload = {
 }
 
 describe('ADC Validate', () => {
-    it('dcFindPayload toThrowError key color', () => {
-        expect(() => dcFindPayload(payload, ['id', 'color'])).toThrowError(
-            /color/
-        )
+    it('dcValidatePayload expect to status 200', () => {
+        const res = valid.dcValidatePayload(payload, ['id', 'salary'])
+        expect(res.status).toBe(200)
     })
-    it('dcFindPayload toThrowError(/test msg/)', () => {
-        expect(() =>
-            dcFindPayload(payload, ['id', 'color'], 'test msg')
-        ).toThrowError(/test msg/)
+    it('dcValidatePayload expect to status 404', () => {
+        const res = valid.dcValidatePayload(
+            payload,
+            ['id', 'color'],
+            'test msg'
+        )
+        expect(res.status).toBe(404)
     })
 })

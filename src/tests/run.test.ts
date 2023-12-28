@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { dcCombineText, dcRandomBetween, dcRunProcess } from '../directive'
+import * as run from '../fnRun'
+import * as to from '../fnTo'
 const USERS = [
     {
         id: 1,
@@ -30,10 +31,10 @@ const USERS = [
 describe('ADC Run of Loop', () => {
     it('dcRunProcess expect (Index)2_(id)3(Index)3_(id)99', () => {
         let res = ''
-        dcRunProcess(
+        run.dcRunProcess(
             USERS,
             (item, index) => {
-                res = res += dcCombineText(
+                res = res += to.dcToCombineText(
                     ['(Index)' + index, '(id)' + item.id],
                     '_'
                 )
@@ -44,14 +45,14 @@ describe('ADC Run of Loop', () => {
     })
     it('dcRunProcess expect Total All Salary', () => {
         let val = 0
-        dcRunProcess(USERS, (item, index) => {
+        run.dcRunProcess(USERS, (item, index) => {
             val = val += item.salary
         })
         expect(val).toBe(86500)
     })
 
-    it('dcRandomBetween expect true', () => {
-        let res = dcRandomBetween(20, 10)
+    it('dcToRandomNumber expect true', () => {
+        let res = to.dcToRandomNumber(20, 10)
         expect(res >= 10 && res <= 20).toBe(true)
     })
 })

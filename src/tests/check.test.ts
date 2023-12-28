@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { dcCheckItemDuplicate, dcCheckObject } from '../directive'
+import * as check from '../fnCheck'
 const payload = {
     id: 99,
     name: 'Lisa',
@@ -36,29 +36,29 @@ const USERS = [
 ]
 
 describe('ADC Check', () => {
-    it('dcCheckItemDuplicate expect 0', () => {
-        const isCheck = dcCheckItemDuplicate(USERS, (v) => v.name)
+    it('check.dcCheckItemDuplicate expect 0', () => {
+        const isCheck = check.dcCheckItemDuplicate(USERS, (v) => v.name)
         console.log('isCheck :>> ', isCheck)
         expect(isCheck).toBe(0)
     })
-    it('dcCheckItemDuplicate expect 1', () => {
+    it('check.dcCheckItemDuplicate expect 1', () => {
         const newItems = [...USERS, { id: 7, name: 'Max' }]
-        const isCheck = dcCheckItemDuplicate(newItems, (v) => v.name)
+        const isCheck = check.dcCheckItemDuplicate(newItems, (v) => v.name)
         expect(isCheck).toBe(1)
     })
 
-    it('dcCheckItemDuplicate Item = Array<string> expect 1', () => {
+    it('check.dcCheckItemDuplicate Item = Array<string> expect 1', () => {
         const newItems = ['red', 'blue', 'green', 'green']
-        const isCheck = dcCheckItemDuplicate(newItems, (v) => v)
+        const isCheck = check.dcCheckItemDuplicate(newItems, (v) => v)
         expect(isCheck).toBe(1)
     })
 
-    it('dcCheckObject Has Key expect 1', () => {
-        const res = dcCheckObject(payload, ['name'])
+    it('check.dcCheckObject Has Key expect 1', () => {
+        const res = check.dcCheckObject(payload, ['name'])
         expect(res).toBe(1)
     })
-    it('dcCheckObject Not Has Key expect 0', () => {
-        const res = dcCheckObject(payload, ['notName'])
+    it('check.dcCheckObject Not Has Key expect 0', () => {
+        const res = check.dcCheckObject(payload, ['notName'])
         expect(res).toBe(0)
     })
 })
