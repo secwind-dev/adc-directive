@@ -25,7 +25,7 @@ export function toCombineText<
  * dcHasKey('19-55 77_88*99 aBC') = '195577_8899abc'
  */
 export function toHasKey(text: string | number | null): string {
-    if (typeof text != 'string' || typeof text != 'number') return ''
+    if (typeof text != 'string' && typeof text != 'number') return ''
     let str = String(text || '').replace(/[^a-zA-Z0-9_\u0E00-\u0E7F ]/g, '')
     return str.replace(/ /g, '').toLocaleLowerCase()
 }
@@ -103,4 +103,23 @@ export function toChangePositionArray<T>(items: T[]): T[] {
             items[j] = x
     );
     return items
+}
+
+/**
+ * @category เปลี่ยนจาก string => date()
+ * @category '31/07/2023' '31-07-2023' '2023-07-2023'
+ * @example
+ *
+ * let date toDate('31/07/2023')
+ * @returns df new date()
+ */
+export function toDate(date: string): Date {
+    let _date = date.replace(/\//g, '-')
+    _date = _date.replace('Z', '')
+    const re = /(\d{2})-(\d{2})-(\d{4})/g
+    const check = /(\d{4})-(\d{2})-(\d{2})/
+    _date = _date.replace(re, '$3-$2-$1')
+
+    if (check.test(String(_date))) return new Date(_date)
+    else return new Date()
 }
