@@ -10,16 +10,12 @@ const payload = {
 }
 
 describe('ADC Validate', () => {
-    it('dcValidatePayload expect to status 200', () => {
-        const res = valid.dcValidatePayload(payload, ['id', 'salary'])
-        expect(res.status).toBe(200)
+    it('validateObject expect to status 1', () => {
+        const res = valid.validateObject(payload, ['id', 'salary'])
+        expect(res.status).toBe(1)
     })
-    it('dcValidatePayload expect to status 404', () => {
-        const res = valid.dcValidatePayload(
-            payload,
-            ['id', 'color'],
-            'test msg'
-        )
-        expect(res.status).toBe(404)
+    it('validateObject expect to status 0', () => {
+        const res = valid.validateObject(payload, ['id', 'color'], 'test msg')
+        expect(res.status).toBe(0)
     })
 })

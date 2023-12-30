@@ -29,12 +29,12 @@ const USERS = [
 ]
 
 describe('ADC Run of Loop', () => {
-    it('dcRunProcess expect (Index)2_(id)3(Index)3_(id)99', () => {
+    it('runProcess expect (Index)2_(id)3(Index)3_(id)99', () => {
         let res = ''
-        run.dcRunProcess(
+        run.runProcess(
             USERS,
             (item, index) => {
-                res = res += to.dcToCombineText(
+                res = res += to.toCombineText(
                     ['(Index)' + index, '(id)' + item.id],
                     '_'
                 )
@@ -43,16 +43,16 @@ describe('ADC Run of Loop', () => {
         )
         expect(res).toBe('(Index)2_(id)3(Index)3_(id)99')
     })
-    it('dcRunProcess expect Total All Salary', () => {
+    it('runProcess expect Total All Salary', () => {
         let val = 0
-        run.dcRunProcess(USERS, (v, index) => {
+        run.runProcess(USERS, (v, index) => {
             val = val += v.salary
         })
         expect(val).toBe(86500)
     })
-    it('dcRunProcess เลือก between index expect 2+3+4+5 = 18', () => {
+    it('runProcess เลือก between index expect 2+3+4+5 = 18', () => {
         let val = 0
-        run.dcRunProcess(
+        run.runProcess(
             [1, 2, 3, 4, 5, 6, 7, 8],
             (v, index) => {
                 val += v
@@ -62,8 +62,8 @@ describe('ADC Run of Loop', () => {
         expect(val).toBe(18)
     })
 
-    it('dcToRandomNumber expect true', () => {
-        let res = to.dcToRandomNumber(20, 10)
+    it('toRandomNumber expect true', () => {
+        let res = to.toRandomNumber(20, 10)
         expect(res >= 10 && res <= 20).toBe(true)
     })
 })

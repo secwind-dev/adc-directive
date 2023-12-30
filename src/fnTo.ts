@@ -7,9 +7,9 @@
  * @param prefix join dataตัวละตัวด้วย prefix /default = ' '
  * @example
  *
- * let text = dcToCombineText([brand, model,year],'/')
+ * let text = toCombineText([brand, model,year],'/')
  */
-export function dcToCombineText<
+export function toCombineText<
     T extends Array<string | number | null | undefined>
 >(items?: T, prefix: string = ' '): string {
     if (!Array.isArray(items)) return ''
@@ -24,7 +24,7 @@ export function dcToCombineText<
  *
  * dcHasKey('19-55 77_88*99 aBC') = '195577_8899abc'
  */
-export function dcToHasKey(text: string | number | null): string {
+export function toHasKey(text: string | number | null): string {
     if (typeof text != 'string' || typeof text != 'number') return ''
     let str = String(text || '').replace(/[^a-zA-Z0-9_\u0E00-\u0E7F ]/g, '')
     return str.replace(/ /g, '').toLocaleLowerCase()
@@ -34,9 +34,9 @@ export function dcToHasKey(text: string | number | null): string {
  * @category จัด format ตัวเลขให้แสดง comma และ decimal
  * @example
  *
- * dcToCurrency(3500.78,2)
+ * toCurrency(3500.78,2)
  */
-export function dcToCurrency(
+export function toCurrency(
     _number: string | number | null,
     decimal: 0 | 2 = 0
 ): string {
@@ -55,7 +55,7 @@ export function dcToCurrency(
  * dcRandom(1000,9999)
  * dcRandom(100) =  random 0 - 100
  */
-export function dcToRandomNumber(number1: number, number2: number = 0): number {
+export function toRandomNumber(number1: number, number2: number = 0): number {
     const n1 = typeof number1 == 'number' ? number1 : 0
     const n2 = typeof number2 == 'number' ? number2 : 0
     const min = Math.min(n1, n2)
@@ -68,10 +68,10 @@ export function dcToRandomNumber(number1: number, number2: number = 0): number {
  * @category random word
  * @example
  *
- * dcToUid(8)
+ * toUid(8)
  *
  */
-export function dcToUid(count: number = 13, _character?: string): string {
+export function toUid(count: number = 13, _character?: string): string {
     let result = ''
     let characters =
         _character ||
@@ -92,7 +92,7 @@ export function dcToUid(count: number = 13, _character?: string): string {
  *
  * dcRandomItem(['A','B','C'])
  */
-export function dcToChangePositionArray<T>(items: T[]): T[] {
+export function toChangePositionArray<T>(items: T[]): T[] {
     if (!Array.isArray(items)) return []
     for (
         let j, x, i = items.length;

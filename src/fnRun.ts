@@ -7,14 +7,14 @@
  * @example
  *
  *  index = 5
- *  dcRunProcess(items, (item, index) => {
+ *  runProcess(items, (item, index) => {
        console.log(item.name)
     },index)
- *  dcRunProcess(items, (item, index) => {
+ *  runProcess(items, (item, index) => {
        console.log(item.name)
     },[2,3])
  */
-export function dcRunProcess<T>(
+export function runProcess<T>(
     items: T[],
     next: (args: T, i?: number) => void,
     _index: number | [number, number] = 0
@@ -27,6 +27,6 @@ export function dcRunProcess<T>(
         const data = items[index]
         next(data, index)
 
-        dcRunProcess(items, next, [index + 1, length])
+        runProcess(items, next, [index + 1, length])
     }
 }

@@ -8,10 +8,10 @@ import { NestedKeys } from './type'
 /**
  * @category Find Array ค้นหาค่าซ้ำ 1>ซ้ำ | 0>ไม่ซ้ำ
  * @example
- * let isCheck = dcCheckDuplicates(items, (v) => v.name)
- * let isCheck = dcCheckDuplicates(item, (v) => dcToCombineText([v.id,v.name]))
+ * let isCheck = checkDuplicates(items, (v) => v.name)
+ * let isCheck = checkDuplicates(item, (v) => toCombineText([v.id,v.name]))
  */
-export function dcCheckItemDuplicate<T>(
+export function checkItemDuplicate<T>(
     items: T[],
     next: (arg: T) => any
 ): 1 | 0 | -1 {
@@ -28,9 +28,9 @@ export function dcCheckItemDuplicate<T>(
  * @param _key Array ที่ระบุ key ใช้่ได้แค่ตำแหน่งที่ 0 เท่านั้น
  * @example
  *
- * dcCheckObject(payload, ['saleOrderItems[0]'])
+ * checkObject(payload, ['saleOrderItems[0]'])
  */
-export function dcCheckObject<T extends object, K extends NestedKeys<T>>(
+export function checkObject<T extends object, K extends NestedKeys<T>>(
     payload: T,
     _key: K[] | string[]
 ): 1 | 0 | -1 {

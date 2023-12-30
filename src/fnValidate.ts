@@ -1,6 +1,6 @@
 /*------------------------------Title---------------------------------*/
 //   function จะ return {
-//     type: 200 |  404  | 500
+//     type: 1 |  0  | 01
 //     message: string
 //  } เสมอ ใช้ในกรณีที่มีการตรวจสอบเข้มข้น และยังเอาไปใช้กับ dcMode()
 /*-------------x----------------Title-----------------x---------------*/
@@ -9,7 +9,7 @@ import * as check from './fnCheck'
 import { NestedKeys } from './type'
 
 type TypeValidate = {
-    status: 200 | 404 | 500
+    status: 1 | 0 | -1
     message: string
 }
 
@@ -20,9 +20,9 @@ type TypeValidate = {
  * @param msgError  คำหรือ title ที่จะแสดง msgError
  * @example
  *
- * return dcValidatePayload(payload, ['id', 'distributor.id'], 'NameTitle')
+ * return validateObject(payload, ['id', 'distributor.id'], 'NameTitle')
  */
-export function dcValidatePayload<T extends object, K extends NestedKeys<T>>(
+export function validateObject<T extends object, K extends NestedKeys<T>>(
     payload: T,
     keys: K[] | string[],
     msgError: string = ''
@@ -31,22 +31,22 @@ export function dcValidatePayload<T extends object, K extends NestedKeys<T>>(
 
     if (typeof payload != 'object' || !Array.isArray(keys)) {
         return {
-            status: 500,
+            status: -1,
             message: 'Error Data is Invalid!!',
         }
     }
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        if (check.dcCheckObject(payload, [key]) !== 1) {
+        if (check.checkObject(payload, [key]) !== 1) {
             return {
-                status: 404,
+                status: 0,
                 message: `!!${msgError} (${key as string} is undefined)`,
             }
         }
     }
 
     return {
-        status: 200,
+        status: 1,
         message: '',
     }
 }

@@ -36,29 +36,29 @@ const USERS = [
 ]
 
 describe('ADC Check', () => {
-    it('check.dcCheckItemDuplicate expect 0', () => {
-        const isCheck = check.dcCheckItemDuplicate(USERS, (v) => v.name)
+    it('check.checkItemDuplicate expect 0', () => {
+        const isCheck = check.checkItemDuplicate(USERS, (v) => v.name)
         console.log('isCheck :>> ', isCheck)
         expect(isCheck).toBe(0)
     })
-    it('check.dcCheckItemDuplicate expect 1', () => {
+    it('check.checkItemDuplicate expect 1', () => {
         const newItems = [...USERS, { id: 7, name: 'Max' }]
-        const isCheck = check.dcCheckItemDuplicate(newItems, (v) => v.name)
+        const isCheck = check.checkItemDuplicate(newItems, (v) => v.name)
         expect(isCheck).toBe(1)
     })
 
-    it('check.dcCheckItemDuplicate Item = Array<string> expect 1', () => {
+    it('check.checkItemDuplicate Item = Array<string> expect 1', () => {
         const newItems = ['red', 'blue', 'green', 'green']
-        const isCheck = check.dcCheckItemDuplicate(newItems, (v) => v)
+        const isCheck = check.checkItemDuplicate(newItems, (v) => v)
         expect(isCheck).toBe(1)
     })
 
-    it('check.dcCheckObject Has Key expect 1', () => {
-        const res = check.dcCheckObject(payload, ['name'])
+    it('check.checkObject Has Key expect 1', () => {
+        const res = check.checkObject(payload, ['name'])
         expect(res).toBe(1)
     })
-    it('check.dcCheckObject Not Has Key expect 0', () => {
-        const res = check.dcCheckObject(payload, ['notName'])
+    it('check.checkObject Not Has Key expect 0', () => {
+        const res = check.checkObject(payload, ['notName'])
         expect(res).toBe(0)
     })
 })
