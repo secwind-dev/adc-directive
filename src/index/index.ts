@@ -1,2 +1,4 @@
 export * from '../directive'
-export * from '../type'
+export * from '../fnCheck'
+export * from '../fnTo'
+export * from '../fnValidate'
