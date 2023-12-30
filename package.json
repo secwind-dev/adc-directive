@@ -1,9 +1,9 @@
 {
   "name": "adc-directive",
-  "homepage": "https://github.com/secwind-dev/ADC",
+  "homepage": "https://github.com/secwind-dev/ADC-Directive",
   "repository": {
     "type": "git",
-    "url": "https://github.com/secwind-dev/ADC"
+    "url": "https://github.com/secwind-dev/ADC-Directive"
   },
   "version": "0.1.9",
   "description": "",
