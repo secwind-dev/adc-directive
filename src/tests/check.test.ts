@@ -38,7 +38,6 @@ const USERS = [
 describe('ADC Check', () => {
     it('check.checkItemDuplicate expect 0', () => {
         const isCheck = check.checkItemDuplicate(USERS, (v) => v.name)
-        console.log('isCheck :>> ', isCheck)
         expect(isCheck).toBe(0)
     })
     it('check.checkItemDuplicate expect 1', () => {

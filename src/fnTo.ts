@@ -2,6 +2,8 @@
 // โหมด To แปลว่า fn จะมีค่า Default ที่ถูก return ออกไปเสมอเป็น type เดียว โดยไม่สนว่าจะจะเกิด error หรือไม่
 /*-------------x----------------Title-----------------x---------------*/
 
+import { EnumRegExp } from './type'
+
 /**
  * @category combine Array ให้อยู่ในรูปแบบ string
  * @param prefix join dataตัวละตัวด้วย prefix /default = ' '
@@ -114,7 +116,7 @@ export function toChangePositionArray<T>(items: T[]): T[] {
  * @returns df new date()
  */
 export function toDate(date: string): Date {
-    let _date = date.replace(/\//g, '-')
+    let _date = date.replace(toRegExp('notCharacter', 'g'), '-')
     _date = _date.replace('Z', '')
     const re = /(\d{2})-(\d{2})-(\d{4})/g
     const check = /(\d{4})-(\d{2})-(\d{2})/
@@ -122,4 +124,11 @@ export function toDate(date: string): Date {
 
     if (check.test(String(_date))) return new Date(_date)
     else return new Date()
+}
+
+export function toRegExp<T extends keyof typeof EnumRegExp>(
+    type: T,
+    flags?: string
+) {
+    return new RegExp(EnumRegExp[type], flags)
 }

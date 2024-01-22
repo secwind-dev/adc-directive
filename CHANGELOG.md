@@ -1,5 +1,11 @@
 # @secwind/adc
 
+## 0.3.0
+
+### Minor Changes
+
+- Create fnMoment 0.3.0
+
 ## 0.1.9
 
 ### Patch Changes

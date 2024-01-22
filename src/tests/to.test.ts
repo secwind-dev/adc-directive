@@ -9,7 +9,6 @@ describe('ADC Data Transfer', () => {
 
     it('to.toHasKey expect redbluegreen', () => {
         const _res = to.toHasKey(res)
-        console.log('_res :>> ', _res)
         expect(_res).toBe('redbluegreen')
     })
     it('to.toCurrency an decimal 2 expect 3,500.00', () => {
@@ -50,5 +49,16 @@ describe('ADC Data Transfer', () => {
                 '_'
             )
         ).toBe('5_11_2023')
+    })
+
+    it(`toRegExp expect 2023 12 05`, () => {
+        const text = '2023-12*05'
+        const res = to.toCombineText(text.split(to.toRegExp('notCharacter')))
+        expect(res).toBe('2023 12 05')
+    })
+    it(`toRegExp expect hello word`, () => {
+        const text = '23h3e33ll99o 77wo23r0d89'
+        const res = text.replace(to.toRegExp('number', 'g'), '')
+        expect(res).toBe('hello word')
     })
 })

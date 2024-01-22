@@ -21,3 +21,12 @@ export type NestedKeys<T> = (
 ) extends infer D
     ? Extract<D, string>
     : never
+
+export const EnumRegExp = {
+    character: /\w/,
+    notCharacter: /\W/,
+    number: /\d/,
+    notNumber: /\D/,
+} as const
+
+export type KeyRegExp = keyof typeof EnumRegExp
