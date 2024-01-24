@@ -7,15 +7,29 @@ const payload = {
     age: 27,
     salary: 35000,
     likes: ['cat', 'car', 'football'],
+    profile: {
+        job: {
+            position: 'DEV',
+            pe: 48,
+            color: ['red', 'blue', 'green', 999],
+            animal: {
+                name: 'CaT',
+            },
+        },
+    },
 }
 
 describe('ADC Validate', () => {
     it('validateObject expect to status 1', () => {
-        const res = valid.validateObject(payload, ['id', 'salary'])
+        const res = valid.validateObject(payload, [
+            'id',
+            'salary',
+            'profile.job.color[2]',
+        ])
         expect(res.status).toBe(1)
     })
     it('validateObject expect to status 0', () => {
-        const res = valid.validateObject(payload, ['id', 'color'], 'test msg')
+        const res = valid.validateObject(payload, ['id', 'color'])
         expect(res.status).toBe(0)
     })
 })

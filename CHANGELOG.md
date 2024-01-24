@@ -1,5 +1,11 @@
 # @secwind/adc
 
+## 0.4.0
+
+### Minor Changes
+
+- fnObject fnArray fnMoment 0.3.0
+
 ## 0.3.0
 
 ### Minor Changes

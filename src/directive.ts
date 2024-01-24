@@ -1,10 +1,8 @@
-import _ from 'lodash'
-
-export function dcDelay(next: () => void, time: number) {
+export function dcDelay(next: () => void, millisecond: number) {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(next())
-        }, time)
+        }, millisecond)
     })
 }
 
