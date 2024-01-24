@@ -6,6 +6,7 @@
 /*-------------x----------------Title-----------------x---------------*/
 
 import * as check from './fnCheck'
+import { checkObject } from './fnObject'
 import { NestedKeys } from './type'
 
 type TypeValidate = {
@@ -27,8 +28,6 @@ export function validateObject<T extends object, K extends NestedKeys<T>>(
     keys: K[] | string[],
     msgError: string = ''
 ): TypeValidate {
-    keys = keys.map((rule) => rule.replace('.length', ''))
-
     if (typeof payload != 'object' || !Array.isArray(keys)) {
         return {
             status: -1,
@@ -37,7 +36,7 @@ export function validateObject<T extends object, K extends NestedKeys<T>>(
     }
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        if (check.checkObject(payload, [key]) !== 1) {
+        if (checkObject(payload, [key]) !== 1) {
             return {
                 status: 0,
                 message: `!!${msgError} (${key as string} is undefined)`,

@@ -51,13 +51,4 @@ describe('ADC Check', () => {
         const isCheck = check.checkItemDuplicate(newItems, (v) => v)
         expect(isCheck).toBe(1)
     })
-
-    it('check.checkObject Has Key expect 1', () => {
-        const res = check.checkObject(payload, ['name'])
-        expect(res).toBe(1)
-    })
-    it('check.checkObject Not Has Key expect 0', () => {
-        const res = check.checkObject(payload, ['notName'])
-        expect(res).toBe(0)
-    })
 })

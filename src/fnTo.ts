@@ -1,3 +1,4 @@
+import { NestedKeys } from './type'
 /*------------------------------Title---------------------------------*/
 // โหมด To แปลว่า fn จะมีค่า Default ที่ถูก return ออกไปเสมอเป็น type เดียว โดยไม่สนว่าจะจะเกิด error หรือไม่
 /*-------------x----------------Title-----------------x---------------*/
@@ -131,4 +132,20 @@ export function toRegExp<T extends keyof typeof EnumRegExp>(
     flags?: string
 ) {
     return new RegExp(EnumRegExp[type], flags)
+}
+
+/**
+ * @param content data ที่เอามาทำการ convert เป็น HasKey
+ * @param allow อณุญาต(''/null/undefined)เป็นค่าเดียวกัน
+ * @example
+ * toConvertData(dataOriginal,true)
+ */
+
+export function toConvertData<T extends Array<T> | object>(
+    content: T,
+    allow: boolean = true
+) {
+    if (allow) {
+        return JSON.stringify(content).replace(/'|"|null|undefined/g, '')
+    } else return JSON.stringify(content).replace(/'|"/g, '')
 }

@@ -27,6 +27,7 @@ export const EnumRegExp = {
     notCharacter: /\W/,
     number: /\d/,
     notNumber: /\D/,
+    email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 } as const
 
 export type KeyRegExp = keyof typeof EnumRegExp
