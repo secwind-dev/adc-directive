@@ -79,8 +79,11 @@ describe('ADC Array', () => {
         const res = checkNestedValue(data, {
             salary: 20000,
             animal: 'CAT',
-            name: 'Max',
             colors: ['red', 'blue', 'green'],
+            name: {
+                a: 'A',
+                b: 100,
+            },
         })
 
         expect(res).toBe(1)

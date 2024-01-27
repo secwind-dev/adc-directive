@@ -16,7 +16,7 @@ export function checkItemDuplicate<T>(
     next: (arg: T) => any
 ): 1 | 0 | -1 {
     if (!Array.isArray(items)) return -1
-    const mapItems = items.map((item) => next(item))
+    const mapItems = items.map(next)
     const uniqueValues = new Set(mapItems)
 
     return uniqueValues.size !== items.length ? 1 : 0

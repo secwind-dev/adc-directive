@@ -1,4 +1,3 @@
-import { NestedKeys } from './type'
 /*------------------------------Title---------------------------------*/
 // โหมด To แปลว่า fn จะมีค่า Default ที่ถูก return ออกไปเสมอเป็น type เดียว โดยไม่สนว่าจะจะเกิด error หรือไม่
 /*-------------x----------------Title-----------------x---------------*/
@@ -117,19 +116,22 @@ export function toChangePositionArray<T>(items: T[]): T[] {
  * @returns df new date()
  */
 export function toDate(date: string): Date {
-    let _date = date.replace(toRegExp('notCharacter', 'g'), '-')
-    _date = _date.replace('Z', '')
+    if (date.toLocaleLowerCase().includes('z')) return new Date(date)
+    let [_date, time] = date.split(' ')
+    // console.log('_date :>> ', _date)
+    _date = _date.replace(toRegExp('notCharacter', 'g'), '-')
     const re = /(\d{2})-(\d{2})-(\d{4})/g
     const check = /(\d{4})-(\d{2})-(\d{2})/
     _date = _date.replace(re, '$3-$2-$1')
-
-    if (check.test(String(_date))) return new Date(_date)
+    const fullDate = toCombineText([_date, time])
+    // console.log('fullDate :>> ', fullDate)
+    if (check.test(String(_date))) return new Date(fullDate)
     else return new Date()
 }
 
 export function toRegExp<T extends keyof typeof EnumRegExp>(
     type: T,
-    flags?: string
+    flags?: 'g' | 'i' | string
 ) {
     return new RegExp(EnumRegExp[type], flags)
 }
@@ -145,7 +147,6 @@ export function toConvertData<T extends Array<T> | object>(
     content: T,
     allow: boolean = true
 ) {
-    if (allow) {
-        return JSON.stringify(content).replace(/'|"|null|undefined/g, '')
-    } else return JSON.stringify(content).replace(/'|"/g, '')
+    if (allow) return JSON.stringify(content).replace(/'|"|null|undefined/g, '')
+    else return JSON.stringify(content).replace(/'|"/g, '')
 }

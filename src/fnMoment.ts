@@ -41,7 +41,7 @@ export function dateDiffToString(
     else return isTh ? 'นาทีที่แล้ว' : 'a few seconds ago'
 }
 
-export function addDay(value: Date, day: number) {
+export function addDate(value: Date, day: number) {
     const event = new Date(value.valueOf())
     const res = event.getDate() + day
     event.setDate(res)
@@ -54,16 +54,17 @@ export function addMonth(value: Date, month: number) {
     return event
 }
 
-export function addMinute(value: Date, minute: number) {
-    const event = new Date(value.valueOf())
-    const res = event.getMinutes() + minute
-    event.setMinutes(res)
-    return event
-}
 export function addHour(value: Date, hour: number) {
     const event = new Date(value.valueOf())
     const res = event.getHours() + hour
     event.setHours(res)
+    return event
+}
+
+export function addMinute(value: Date, minute: number) {
+    const event = new Date(value.valueOf())
+    const res = event.getMinutes() + minute
+    event.setMinutes(res)
     return event
 }
 

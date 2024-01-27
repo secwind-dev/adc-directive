@@ -1,7 +1,14 @@
 import { NestedKeys } from './type'
 import { mapArray } from './fnArray'
 import { isObject } from './service'
+import { toConvertData } from './fnTo'
 
+/**
+ * @category แปลง profile.name.colors[2].length เป็น array
+ * @return ['profile','name','colors','2']
+ * @example
+ * mapToKeys("profile.name.colors[2].length")
+ */
 export function mapToKeys(key: string) {
     return key
         .replace(/\[([^\[\]]*)\]/g, '.$1.')
@@ -11,11 +18,10 @@ export function mapToKeys(key: string) {
 }
 
 /**
- * @category ตรวจ key ใน payload เมื่อไม่พบจะ return undefined
- * @param payload  Object ที่ทำการตรวจสอบ
- * @param _key Array ที่ระบุ key ใช้่ได้แค่ตำแหน่งที่ 0 เท่านั้น
+ * @category ตรวจ key[] ใน object
+ * @return 1 | 0 | -1
  * @example
- * checkObject(payload, ['saleOrderItems[0]'])
+ * checkObject(payload, ['saleOrderItems[0]','profile.name',])
  */
 export function checkObject<T extends object, K extends NestedKeys<T>>(
     payload: T,
@@ -43,10 +49,11 @@ export function checkObject<T extends object, K extends NestedKeys<T>>(
 }
 
 /**
- * @category แปลงให้ Array ทุกตัวอยู่ในระดับที่เท่ากัน
- * @returns [1,2,3,4,5,6]
+ * @category รวม object ระดับ nested ให้เข้ากันในทุกระดับ
+ * return
+ * {name:'a',profile:{color:'red',email:'email'}}
  * @example
- * mapArray([1, [2, 3, [4, 5, [6]]]])
+ * mergeObject({name:'a',profile:{color:'red'}},{profile:{email:'email'}})
  */
 export function mergeObject(...objects: object[]): Record<string, any> {
     return mapArray(objects).reduce((prev, obj) => {
@@ -101,6 +108,12 @@ export function createObj<T extends object, K extends NestedKeys<T>>(
     return undefined
 }
 
+/**
+ * @category Find object แล้วสร้างเป็น object ใหม่จาก keys
+ * @Return {color:red,profile:{name:Max}}
+ * @example
+ * checkNestedValue(data,['color',profile.name])
+ */
 export function selectObject<T extends object, K extends NestedKeys<T>>(
     payload: T,
     items: K[] | string[]
@@ -134,15 +147,21 @@ export function checkNestedValue<T>(
     const keys = Object.keys(rules)
     JSON.stringify(content, (_, nestedValue) => {
         keys.forEach((key) => {
-            if (Array.isArray(rules[key]) && Array.isArray(nestedValue[key])) {
-                let nes = nestedValue[key]
-                let rec = rules[key] as any[]
-                conditions.push(nes.toString() == rec.toLocaleString())
+            if (
+                (Array.isArray(rules[key]) &&
+                    Array.isArray(nestedValue[key])) ||
+                (rules[key] &&
+                    typeof rules[key] == 'object' &&
+                    nestedValue[key] &&
+                    typeof nestedValue[key] == 'object')
+            ) {
+                const check =
+                    toConvertData(nestedValue[key]) == toConvertData(rules[key])
+                conditions.push(check)
             } else {
                 conditions.push(nestedValue[key] == rules[key])
             }
         })
-
         return nestedValue
     })
 

@@ -28,6 +28,12 @@ const USERS = [
         salary: 25000,
     },
     {
+        id: 4,
+        name: 'Zoo',
+        age: 30,
+        salary: 25000,
+    },
+    {
         id: 99,
         name: 'Lisa',
         age: 27,
@@ -41,8 +47,8 @@ describe('ADC Check', () => {
         expect(isCheck).toBe(0)
     })
     it('check.checkItemDuplicate expect 1', () => {
-        const newItems = [...USERS, { id: 7, name: 'Max' }]
-        const isCheck = check.checkItemDuplicate(newItems, (v) => v.name)
+        const newItems = [...USERS, { id: 1, name: 'Max' }]
+        const isCheck = check.checkItemDuplicate(newItems, (v) => v.name + v.id)
         expect(isCheck).toBe(1)
     })
 
