@@ -13,7 +13,8 @@ describe('ADC Compose For Test', () => {
     const date = toDate('15-01-2024 10:00:00')
     it('withDateDiff to -5day expect 5 days', () => {
         const res = withDateDiff(new Date())
-        expect(res(addDate(new Date(), -5)).days).toBe(5)
+        const dif = addDate(new Date(), -5)
+        expect(res(dif).days).toBe(5)
     })
 
     it('withAddMonth to 4m expect 2024-05-15 10:00:00', () => {

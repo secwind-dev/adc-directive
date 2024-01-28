@@ -24,12 +24,12 @@ describe('ADC Validate', () => {
         const res = valid.validateObject(payload, [
             'id',
             'salary',
-            'profile.job.color[2]',
+            'profile.job.color.length',
         ])
         expect(res.status).toBe(1)
     })
     it('validateObject expect to status 0', () => {
-        const res = valid.validateObject(payload, ['id', 'color'])
+        const res = valid.validateObject(payload, ['id', 'colorXX'])
         expect(res.status).toBe(0)
     })
 })

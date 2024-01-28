@@ -9,7 +9,7 @@ import { toConvertData } from './fnTo'
  * @example
  * mapToKeys("profile.name.colors[2].length")
  */
-export function mapToKeys(key: string) {
+export function mapToKeys(key: Readonly<string>) {
     return key
         .replace(/\[([^\[\]]*)\]/g, '.$1.')
         .split('.')
@@ -19,33 +19,32 @@ export function mapToKeys(key: string) {
 
 /**
  * @category ตรวจ key[] ใน object
- * @return 1 | 0 | -1
+ * @return boolean
  * @example
  * checkObject(payload, ['saleOrderItems[0]','profile.name',])
  */
 export function checkObject<T extends object, K extends NestedKeys<T>>(
-    payload: T,
+    payload: Readonly<T>,
     keyNames: K[] | string[]
-): 1 | 0 | -1 {
-    if (typeof payload != 'object' || payload == null) return -1
+): boolean {
+    if (typeof payload != 'object' || payload == null) return false
     const keys = keyNames.map((key) => mapToKeys(key))
-    let value: 1 | 0 | -1 = 0
+    let isValue: boolean = false
     for (let k = 0; k < keys.length; k++) {
         let items = keys[k]
         let data: any = payload
         for (let i = 0; i < items.length; i++) {
-            const newData = data[items[i]]
-            value = newData ? 1 : 0
-            data = newData
-            if (value === 0) {
+            data = data[items[i]]
+            isValue = data !== undefined
+            if (isValue == false) {
                 break
             }
         }
-        if (value === 0) {
+        if (isValue == false) {
             break
         }
     }
-    return value
+    return isValue
 }
 
 /**
@@ -55,7 +54,9 @@ export function checkObject<T extends object, K extends NestedKeys<T>>(
  * @example
  * mergeObject({name:'a',profile:{color:'red'}},{profile:{email:'email'}})
  */
-export function mergeObject(...objects: object[]): Record<string, any> {
+export function mergeObject(
+    ...objects: Readonly<object[]>
+): Record<string, any> {
     return mapArray(objects).reduce((prev, obj) => {
         if (isObject(obj)) {
             Object.keys(obj).forEach((key) => {
@@ -77,9 +78,9 @@ export function mergeObject(...objects: object[]): Record<string, any> {
 }
 
 export function createObj<T extends object, K extends NestedKeys<T>>(
-    payload: T,
+    payload: Readonly<T>,
     key: K | string
-): Record<string, any> | undefined {
+): Record<string, any> {
     if (checkObject(payload, [key])) {
         let keys = mapToKeys(key)
         let length = keys.length
@@ -105,7 +106,7 @@ export function createObj<T extends object, K extends NestedKeys<T>>(
 
         return payload
     }
-    return undefined
+    return {}
 }
 
 /**
@@ -115,13 +116,13 @@ export function createObj<T extends object, K extends NestedKeys<T>>(
  * checkNestedValue(data,['color',profile.name])
  */
 export function selectObject<T extends object, K extends NestedKeys<T>>(
-    payload: T,
+    payload: Readonly<T>,
     items: K[] | string[]
 ): Record<string, any> {
     if (typeof payload != 'object' || payload == null) return {}
     const objArray: object[] = []
     items.forEach((keys) => {
-        if (checkObject(payload, [keys]) === 1) {
+        if (checkObject(payload, [keys])) {
             objArray.push(createObj(payload, keys)!)
         }
     })
@@ -131,7 +132,7 @@ export function selectObject<T extends object, K extends NestedKeys<T>>(
 
 /**
  * @category Find object จากส่วนไหนของก็ได้ NestedData
- * @Return 1 | 0 | -1
+ * @return boolean
  * @example
  * checkNestedValue(data,{
  *  colors: ['red', 'blue', 'green'],
@@ -140,9 +141,9 @@ export function selectObject<T extends object, K extends NestedKeys<T>>(
  * })
  */
 export function checkNestedValue<T>(
-    content: T | T[],
+    content: Readonly<T | T[]>,
     rules: Record<string, any>
-): 1 | 0 | -1 {
+): boolean {
     let conditions: boolean[] = []
     const keys = Object.keys(rules)
     JSON.stringify(content, (_, nestedValue) => {
@@ -165,5 +166,5 @@ export function checkNestedValue<T>(
         return nestedValue
     })
 
-    return conditions.filter((v) => v).length == keys.length ? 1 : 0
+    return conditions.filter((v) => v).length === keys.length
 }

@@ -1,6 +1,6 @@
 import { toCombineText } from './fnTo'
 
-export function dateDiff(a: Date, b: Date = new Date()) {
+export function dateDiff(a: Readonly<Date>, b: Date = new Date()) {
     const diffMs = Math.abs(a.valueOf() - b.valueOf()) // milliseconds
     const secs = Math.floor(Math.abs(diffMs) / 1000)
     const mins = Math.floor(secs / 60)
@@ -19,7 +19,7 @@ export function dateDiff(a: Date, b: Date = new Date()) {
 }
 
 export function dateDiffToString(
-    a: Date,
+    a: Readonly<Date>,
     b: Date = new Date(),
     local: 'th' | 'en' = 'th'
 ): string {
@@ -41,34 +41,34 @@ export function dateDiffToString(
     else return isTh ? 'นาทีที่แล้ว' : 'a few seconds ago'
 }
 
-export function addDate(value: Date, day: number) {
+export function addDate(value: Readonly<Date>, day: number) {
     const event = new Date(value.valueOf())
     const res = event.getDate() + day
     event.setDate(res)
     return event
 }
-export function addMonth(value: Date, month: number) {
+export function addMonth(value: Readonly<Date>, month: number) {
     const event = new Date(value.valueOf())
     const res = event.getMonth() + month
     event.setMonth(res)
     return event
 }
 
-export function addHour(value: Date, hour: number) {
+export function addHour(value: Readonly<Date>, hour: number) {
     const event = new Date(value.valueOf())
     const res = event.getHours() + hour
     event.setHours(res)
     return event
 }
 
-export function addMinute(value: Date, minute: number) {
+export function addMinute(value: Readonly<Date>, minute: number) {
     const event = new Date(value.valueOf())
     const res = event.getMinutes() + minute
     event.setMinutes(res)
     return event
 }
 
-export function dateToCombine(value: Date) {
+export function dateToCombine(value: Readonly<Date>) {
     const year = value.getFullYear().toString()
     const month = (value.getMonth() + 1).toString().padStart(2, '0')
     const day = value.getDate().toString().padStart(2, '0')

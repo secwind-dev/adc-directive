@@ -42,19 +42,19 @@ const USERS = [
 ]
 
 describe('ADC Check', () => {
-    it('check.checkItemDuplicate expect 0', () => {
+    it('check.checkItemDuplicate expect false', () => {
         const isCheck = check.checkItemDuplicate(USERS, (v) => v.name)
-        expect(isCheck).toBe(0)
+        expect(isCheck).toBe(false)
     })
-    it('check.checkItemDuplicate expect 1', () => {
+    it('check.checkItemDuplicate expect true', () => {
         const newItems = [...USERS, { id: 1, name: 'Max' }]
         const isCheck = check.checkItemDuplicate(newItems, (v) => v.name + v.id)
-        expect(isCheck).toBe(1)
+        expect(isCheck).toBe(true)
     })
 
-    it('check.checkItemDuplicate Item = Array<string> expect 1', () => {
+    it('check.checkItemDuplicate Item = Array<string> expect true', () => {
         const newItems = ['red', 'blue', 'green', 'green']
         const isCheck = check.checkItemDuplicate(newItems, (v) => v)
-        expect(isCheck).toBe(1)
+        expect(isCheck).toBe(true)
     })
 })

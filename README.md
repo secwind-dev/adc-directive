@@ -33,19 +33,15 @@ text  =  'a_b_c'
 > dc.to
 
 -   สื่อถึง fn ที่มีการ return ค่าและค่านั้นจะเป็น value type เดียวเสมอเพื่อสอดคล้องกับการใช้งานในรูปแบบ functional programming
-    > dc.check
--   fn ที่ทำการเช็คสิ่งต่างๆและ fn ทุกตัว return 1 | 0 | -1 ออกมาเสมอ
     > dc.validate
 -   fn ที่ทำการเช็คสิ่งต่างๆ แต่จะเข้มข้นกว่า
 
          1 = ผ่านเสมอ  0 = ไม่ผ่านเสอ  -1 = เกิดความผิดพลาดเสมอ
-         เราจึงใช้ประโยชน์จาก statu เพื่อ if กรณีหยุดการทำงานหรือพ่น new throw Error 		  message ออกไป
+         เราจึงใช้ประโยชน์จาก status เพื่อ if กรณีหยุดการทำงานหรือพ่น new throw Error 		  message ออกไป
          return {
              status: 1 | 0 | -1 ,
              message: text
          }
-
-
 
 > dc.run
 

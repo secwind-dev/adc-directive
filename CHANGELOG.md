@@ -1,5 +1,11 @@
 # @secwind/adc
 
+## 0.5.0
+
+### Minor Changes
+
+- Minor 0.5.0 update Bug Check & insert ci
+
 ## 0.4.0
 
 ### Minor Changes

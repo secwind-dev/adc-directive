@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { chunkArray, mapArray } from '../fnArray'
-import { toCombineText } from '../fnTo'
 
 describe('ADC Array', () => {
     it('mapArray expect [1,2,3,4,5,6]', () => {
