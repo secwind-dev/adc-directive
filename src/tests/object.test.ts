@@ -29,37 +29,37 @@ const data = {
     value: new Date(),
 }
 
-describe('ADC Array', () => {
-    it('checkObject Has Key expect 1', () => {
+describe('ADC Object', () => {
+    it('checkObject Has Key expect true', () => {
         const res = checkObject(data, [
             'name',
             'like.profile.name.a',
             'cars.length',
             'like.colors[1]',
         ])
-        expect(res).toBe(1)
+        expect(res).toBe(true)
     })
-    it('checkObject Not Has Key expect 0', () => {
+    it('checkObject Not Has Key expect false', () => {
         const res = checkObject(data, [
             'cars.length',
             'like.profile.job',
             'emailX',
         ])
-        expect(res).toBe(0)
+        expect(res).toBe(false)
     })
-    it('selectObject expect 1', () => {
+    it('selectObject expect true', () => {
         const res = selectObject(data, ['email', 'name', 'like.animal'])
-        expect(checkObject(res, ['email', 'name', 'like.animal'])).toBe(1)
+        expect(checkObject(res, ['email', 'name', 'like.animal'])).toBe(true)
     })
-    it('selectObject expect 0', () => {
+    it('selectObject expect false', () => {
         const res = selectObject(data, ['email', 'name'])
-        expect(checkObject(res, ['email', 'name', 'like.animal'])).toBe(0)
+        expect(checkObject(res, ['email', 'name', 'like.animal'])).toBe(false)
     })
     it('mapToKeys expect name,color,animal,0', () => {
         const res = mapToKeys('name.color.length.animal[0]').toString()
         expect(res).toBe('name,color,animal,0')
     })
-    it('mergeObject expect 1', () => {
+    it('mergeObject expect true', () => {
         const res = mergeObject(
             {
                 name: 'Max',
@@ -68,21 +68,25 @@ describe('ADC Array', () => {
             { like: { car: 'Toyota' } }
         )
 
-        expect(checkObject(res, ['like.car', 'like.color'])).toBe(1)
+        expect(checkObject(res, ['like.car', 'like.color'])).toBe(true)
+        // expect(res).toBe(true)
     })
-    it('createObj expect 1', () => {
+    it('createObj expect true', () => {
         const res = createObj(data, 'like.profile.name.a')!
 
-        expect(checkObject(res, ['like.profile.name.a'])).toBe(1)
+        expect(checkObject(res, ['like.profile.name.a'])).toBe(true)
     })
-    it('checkNestedValue expect 1', () => {
+    it('checkNestedValue expect true', () => {
         const res = checkNestedValue(data, {
             salary: 20000,
             animal: 'CAT',
-            name: 'Max',
             colors: ['red', 'blue', 'green'],
+            name: {
+                a: 'A',
+                b: 100,
+            },
         })
 
-        expect(res).toBe(1)
+        expect(res).toBe(true)
     })
 })

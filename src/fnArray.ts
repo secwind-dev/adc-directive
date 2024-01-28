@@ -4,7 +4,7 @@
  * mapArray([1, [2, 3, [4, 5, [6]]]])
  * @returns [1,2,3,4,5,6]
  */
-export function mapArray(items: any[]): any[] {
+export function mapArray(items: Readonly<any[]>): any[] {
     return items.reduce((pre, cur) => {
         if (Array.isArray(cur)) pre.push(...mapArray(cur))
         else pre.push(cur)
@@ -18,7 +18,7 @@ export function mapArray(items: any[]): any[] {
  * chunkArray([1,2,3,4,5],2)
  * @returns [[1,2],[3,4],[5]]
  */
-export function chunkArray<T>(items: T[], n: number): T[][] {
+export function chunkArray<T>(items: Readonly<T[]>, n: number): T[][] {
     const result: T[][] = []
     for (let i = 0; i <= items.length; i += n) {
         result.push(items.slice(i, i + n))

@@ -24,7 +24,7 @@ type TypeValidate = {
  * return validateObject(payload, ['id', 'distributor.id'], 'NameTitle')
  */
 export function validateObject<T extends object, K extends NestedKeys<T>>(
-    payload: T,
+    payload: Readonly<T>,
     keys: K[] | string[],
     msgError: string = ''
 ): TypeValidate {
@@ -36,7 +36,7 @@ export function validateObject<T extends object, K extends NestedKeys<T>>(
     }
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        if (checkObject(payload, [key]) !== 1) {
+        if (!checkObject(payload, [key])) {
             return {
                 status: 0,
                 message: `!!${msgError} (${key as string} is undefined)`,

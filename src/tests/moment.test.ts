@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
-    addDay,
+    addDate,
     addHour,
     addMinute,
     addMonth,
@@ -10,11 +10,11 @@ import {
 
 describe('ADC Moment For Test', () => {
     it('dateDiffToString < 3 currentDate', () => {
-        const res = dateDiffToString(addDay(new Date(), -3))
+        const res = dateDiffToString(addDate(new Date(), -3))
         expect(res).toBe('3 วันที่แล้ว')
     })
     it('dateDiffToString > 7 currentDate', () => {
-        const res = dateDiffToString(addDay(new Date(), +7))
+        const res = dateDiffToString(addDate(new Date(), +7))
         expect(res).toBe('7 วัน')
     })
     it('dateDiffToString < 25 min', () => {

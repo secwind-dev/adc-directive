@@ -15,6 +15,15 @@ export function runProcess<T>(
     next: (args: T, i?: number) => void,
     startIndex: number | [number, number] = 0
 ): void {
+    // ทำตาม TOC ประหยัดพื้นที่ JS ไม่เรียก func ตัวเองซ้ำๆ
+    return _runProcess(items, next, startIndex)
+}
+
+function _runProcess<T>(
+    items: T[],
+    next: (args: T, i?: number) => void,
+    startIndex: number | [number, number] = 0
+): void {
     const [index, length] = Array.isArray(startIndex)
         ? startIndex
         : [startIndex, items.length]
@@ -23,6 +32,6 @@ export function runProcess<T>(
         const data = items[index]
         next(data, index)
 
-        runProcess(items, next, [index + 1, length])
+        _runProcess(items, next, [index + 1, length])
     }
 }

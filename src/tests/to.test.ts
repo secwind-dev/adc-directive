@@ -61,4 +61,16 @@ describe('ADC Data Transfer', () => {
         const res = text.replace(to.toRegExp('number', 'g'), '')
         expect(res).toBe('hello word')
     })
+    it(`toNumber expect 789`, () => {
+        const res = to.toNumber('789')
+        expect(res).toBe(789)
+    })
+    it(`toNumber expect 89`, () => {
+        const res = to.toNumber('0089')
+        expect(res).toBe(89)
+    })
+    it(`toNumber expect 0`, () => {
+        const res = to.toNumber('089X')
+        expect(res).toBe(0)
+    })
 })

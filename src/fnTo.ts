@@ -1,8 +1,8 @@
-import { NestedKeys } from './type'
 /*------------------------------Title---------------------------------*/
 // โหมด To แปลว่า fn จะมีค่า Default ที่ถูก return ออกไปเสมอเป็น type เดียว โดยไม่สนว่าจะจะเกิด error หรือไม่
 /*-------------x----------------Title-----------------x---------------*/
 
+import { isNumber } from './service'
 import { EnumRegExp } from './type'
 
 /**
@@ -12,9 +12,10 @@ import { EnumRegExp } from './type'
  *
  * let text = toCombineText([brand, model,year],'/')
  */
-export function toCombineText<
-    T extends Array<string | number | null | undefined>
->(items?: T, prefix: string = ' '): string {
+export function toCombineText<T extends Array<unknown>>(
+    items: Readonly<T>,
+    prefix: string = ' '
+): string {
     if (!Array.isArray(items)) return ''
     return items
         .filter((v) => (v && typeof v === 'string') || typeof v === 'number')
@@ -27,11 +28,20 @@ export function toCombineText<
  *
  * dcHasKey('19-55 77_88*99 aBC') = '195577_8899abc'
  */
-export function toHasKey(text: string | number | null): string {
+export function toHasKey(text: Readonly<string | number | null>): string {
     if (typeof text != 'string' && typeof text != 'number') return ''
     let str = String(text || '').replace(/[^a-zA-Z0-9_\u0E00-\u0E7F ]/g, '')
     return str.replace(/ /g, '').toLocaleLowerCase()
 }
+
+/**
+ * @category เปลี่ยนจาก string เป็น number
+ * @returns number | 0
+ * @example
+ * toNumber('123')
+ */
+export const toNumber = (v: Readonly<unknown>): number =>
+    isNumber(v) ? (Number(v) ? Number(v) : 0) : 0
 
 /**
  * @category จัด format ตัวเลขให้แสดง comma และ decimal
@@ -40,13 +50,13 @@ export function toHasKey(text: string | number | null): string {
  * toCurrency(3500.78,2)
  */
 export function toCurrency(
-    _number: string | number | null,
-    decimal: 0 | 2 = 0
+    number: Readonly<unknown>,
+    decimal: number = 0
 ): string {
-    let value = Number(_number) || 0
+    let value = toNumber(number)
     return value.toLocaleString('en-US', {
         style: 'decimal',
-        maximumFractionDigits: 2,
+        maximumFractionDigits: 8,
         minimumFractionDigits: decimal,
     })
 }
@@ -58,7 +68,10 @@ export function toCurrency(
  * dcRandom(1000,9999)
  * dcRandom(100) =  random 0 - 100
  */
-export function toRandomNumber(number1: number, number2: number = 0): number {
+export function toRandomNumber(
+    number1: Readonly<number>,
+    number2: Readonly<number> = 0
+): number {
     const n1 = typeof number1 == 'number' ? number1 : 0
     const n2 = typeof number2 == 'number' ? number2 : 0
     const min = Math.min(n1, n2)
@@ -74,10 +87,10 @@ export function toRandomNumber(number1: number, number2: number = 0): number {
  * toUid(8)
  *
  */
-export function toUid(count: number = 13, _character?: string): string {
+export function toUid(count: number = 13, character?: string): string {
     let result = ''
     let characters =
-        _character ||
+        character ||
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     let charactersLength = characters.length
     for (let i = 0; i < count; i++) {
@@ -95,7 +108,7 @@ export function toUid(count: number = 13, _character?: string): string {
  *
  * dcRandomItem(['A','B','C'])
  */
-export function toChangePositionArray<T>(items: T[]): T[] {
+export function toChangePositionArray<T>(items: Readonly<T[]>): T[] {
     if (!Array.isArray(items)) return []
     for (
         let j, x, i = items.length;
@@ -111,25 +124,26 @@ export function toChangePositionArray<T>(items: T[]): T[] {
 /**
  * @category เปลี่ยนจาก string => date()
  * @category '31/07/2023' '31-07-2023' '2023-07-2023'
+ * @returns   date()
  * @example
  *
- * let date toDate('31/07/2023')
- * @returns df new date()
+ * let date toDate('31/07/2023 12:55:00')
  */
 export function toDate(date: string): Date {
-    let _date = date.replace(toRegExp('notCharacter', 'g'), '-')
-    _date = _date.replace('Z', '')
+    if (date.toLocaleLowerCase().includes('z')) return new Date(date)
+    let [_date, time] = date.split(' ')
+    _date = _date.replace(toRegExp('notCharacter', 'g'), '-')
     const re = /(\d{2})-(\d{2})-(\d{4})/g
     const check = /(\d{4})-(\d{2})-(\d{2})/
     _date = _date.replace(re, '$3-$2-$1')
-
-    if (check.test(String(_date))) return new Date(_date)
+    const fullDate = toCombineText([_date, time])
+    if (check.test(String(_date))) return new Date(fullDate)
     else return new Date()
 }
 
 export function toRegExp<T extends keyof typeof EnumRegExp>(
     type: T,
-    flags?: string
+    flags?: 'g' | 'i' | string
 ) {
     return new RegExp(EnumRegExp[type], flags)
 }
@@ -142,10 +156,9 @@ export function toRegExp<T extends keyof typeof EnumRegExp>(
  */
 
 export function toConvertData<T extends Array<T> | object>(
-    content: T,
+    content: Readonly<T>,
     allow: boolean = true
-) {
-    if (allow) {
-        return JSON.stringify(content).replace(/'|"|null|undefined/g, '')
-    } else return JSON.stringify(content).replace(/'|"/g, '')
+): string {
+    if (allow) return JSON.stringify(content).replace(/'|"|null|undefined/g, '')
+    else return JSON.stringify(content).replace(/'|"/g, '')
 }
