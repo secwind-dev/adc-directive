@@ -56,7 +56,7 @@ export function toCurrency(
     let value = toNumber(number)
     return value.toLocaleString('en-US', {
         style: 'decimal',
-        maximumFractionDigits: 8,
+        maximumFractionDigits: 2,
         minimumFractionDigits: decimal,
     })
 }
@@ -114,9 +114,9 @@ export function toChangePositionArray<T>(items: Readonly<T[]>): T[] {
         let j, x, i = items.length;
         i;
         j = parseInt(Math.random() * i + ''),
-            x = items[--i],
-            items[i] = items[j],
-            items[j] = x
+        x = items[--i],
+        items[i] = items[j],
+        items[j] = x
     );
     return items
 }
