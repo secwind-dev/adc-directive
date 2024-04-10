@@ -1,5 +1,11 @@
 # @secwind/adc
 
+## 0.5.2
+
+### Patch Changes
+
+- update bug toCurrency decimal error
+
 ## 0.5.1
 
 ### Patch Changes
